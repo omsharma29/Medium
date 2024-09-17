@@ -4,13 +4,13 @@ import { Hono } from "hono";
 import { sign } from "hono/jwt";
 import { SignupInput, SignInInput } from "@omsharma/mediumclone";
 
-
 export const UserRoute = new Hono<{
     Bindings:{
       JWT_SECRET: string
       DATABASE_URL: string
     }
   }>()
+
 
 
 UserRoute.post('/signup', async(c) => {
@@ -20,9 +20,18 @@ UserRoute.post('/signup', async(c) => {
     const body = await c.req.json()
     const {success} = SignupInput.safeParse(body)
     if(!success){
+      c.status(403)
       return c.json({
         message: "Invalid Inputs"
       })
+    }
+    const existingUser = await prisma.user.findUnique({
+      where: { email: body.email },
+    });
+
+    if (existingUser) {
+       c.status(409) 
+       return c.json({ message: 'User Already Exists' });
     }
     try {
       const user = await prisma.user.create({
@@ -32,6 +41,7 @@ UserRoute.post('/signup', async(c) => {
                   password: body.password
               }
       })
+    
       if (!c.env.JWT_SECRET || typeof c.env.JWT_SECRET !== 'string') {
         return c.json({ error: 'JWT secret is not properly configured' });
       }
@@ -56,6 +66,7 @@ UserRoute.post('/signup', async(c) => {
   const body = await c.req.json()
   const {success} = SignInInput.safeParse(body)
     if(!success){
+      c.status(403)
       return c.json({
         message: "Invalid Inputs"
       })
