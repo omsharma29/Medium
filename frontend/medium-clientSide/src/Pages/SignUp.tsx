@@ -1,5 +1,30 @@
-import { Link } from 'react-router-dom'
+import { signupInput } from '@omsharma/mediumclone'
+import { useState } from 'react'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import {SignUp_URL} from '../Cofig/Backend_URL'
 export default function SignUp() {
+  const navigate = useNavigate()
+  const [Credentials, setCredentials] = useState<signupInput>(
+    {
+      name:"",
+      email: "",
+      password: ""
+    }
+  )
+
+async function sendRq (){
+ try {
+  const response = axios.post(`${SignUp_URL}`)
+  const jwt = (await response).data
+  localStorage.setItem("token", jwt)
+  navigate("/blog")
+ } catch (error) {
+  console.log(error)
+ }
+}
+
+
   return (
     <>
       <div className="flex flex-col md:flex-row h-screen">
@@ -26,7 +51,7 @@ export default function SignUp() {
               </div>
               <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-black-300">Remember me</label>
             </div>
-            <button type="submit" className="text-white mb-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+            <button type="submit" onSubmit={sendRq} className="text-white mb-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
           </form>
 
         </div>
