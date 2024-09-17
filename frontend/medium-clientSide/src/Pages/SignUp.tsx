@@ -1,154 +1,45 @@
-// 'use client'
+import { Link } from 'react-router-dom'
+export default function SignUp() {
+  return (
+    <>
+      <div className="flex flex-col md:flex-row h-screen">
+        <div className="flex-1 flex justify-center items-center bg-mediumWhite">
 
-// import { useState } from 'react'
-// import { useForm } from 'react-hook-form'
-// import { zodResolver } from '@hookform/resolvers/zod'
-// import * as z from 'zod'
-// import { Button } from "@/components/ui/button"
-// import { Input } from "@/components/ui/input"
-// import { Label } from "@/components/ui/label"
-// import {
-//   Form,
-//   FormControl,
-//   FormField,
-//   FormItem,
-//   FormLabel,
-//   FormMessage,
-// } from "@/components/ui/form"
-// import { Icons } from "@/components/ui/icons"
+          <form className="max-w-sm mx-auto">
+            <div className="text-black font-serif font-extrabold items-center text-[2.3rem] mt-5 ">Create an Account</div>
+            <div className="text-gray-400 pb-10 ">Already have an Account  <Link to="/signin" className=" underline">Login</Link></div>
+            <div className="mb-5">
+              <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 ">Your Name</label>
+              <input type="name" id="name" className="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full px-10 py-2  dark:text-black" placeholder="xyz" required />
+            </div>
+            <div className="mb-5">
+              <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your Email</label>
+              <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full px-10 py-2  dark:text-black" placeholder="name@email.com" required />
+            </div>
+            <div className="mb-5">
+              <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 ">Your Password</label>
+              <input type="password" id="password" className="bg-gray-50 border text-left border-gray-300 text-sm rounded-lg block w-full px-10 py-2  dark:text-black" placeholder="min 8 letter" required />
+            </div>
+            <div className="flex items-start mb-5">
+              <div className="flex items-center h-5">
+                <input id="remember" type="checkbox" value="" className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+              </div>
+              <label htmlFor="remember" className="ms-2 text-sm font-medium text-gray-900 dark:text-black-300">Remember me</label>
+            </div>
+            <button type="submit" className="text-white mb-3 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+          </form>
 
-// const formSchema = z.object({
-//   name: z.string().min(2, {
-//     message: "Name must be at least 2 characters.",
-//   }),
-//   email: z.string().email({
-//     message: "Please enter a valid email address.",
-//   }),
-//   password: z.string().min(8, {
-//     message: "Password must be at least 8 characters.",
-//   }),
-// })
+        </div>
 
-// export default function SignupPage() {
-//   const [isLoading, setIsLoading] = useState<boolean>(false)
 
-//   const form = useForm<z.infer<typeof formSchema>>({
-//     resolver: zodResolver(formSchema),
-//     defaultValues: {
-//       name: "",
-//       email: "",
-//       password: "",
-//     },
-//   })
+        <div className="pr-3  flex-1 flex flex-col justify-center items-center bg-customGray p-6 bg-mediumGrey">
+          <blockquote className="text-lg italic font-semibold text-gray-900 dark:text-black text-center">
+            <p>"The customer service I received was exceptional. The support team went above and beyond to address my concern."</p>
+          </blockquote>
+          <p className="mt-4 text-sm font-medium text-gray-700">— Om Sharma, CEO of Google</p>
+        </div>
+      </div>
 
-//   async function onSubmit(values: z.infer<typeof formSchema>) {
-//     setIsLoading(true)
-
-//     // Here you would typically send the form data to your backend
-//     // For demonstration, we'll just simulate a delay
-//     console.log(values)
-//     await new Promise(resolve => setTimeout(resolve, 2000))
-
-//     setIsLoading(false)
-//   }
-
-//   return (
-//     <div className="container mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
-//       <div className="flex flex-col space-y-2 text-center">
-//         <Icons.logo className="mx-auto h-6 w-6" />
-//         <h1 className="text-2xl font-semibold tracking-tight">Join Medium</h1>
-//         <p className="text-sm text-muted-foreground">
-//           Enter your details to create an account
-//         </p>
-//       </div>
-//       <div className="grid gap-6">
-//         <Form {...form}>
-//           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-//             <FormField
-//               control={form.control}
-//               name="name"
-//               render={({ field }) => (
-//                 <FormItem>
-//                   <FormLabel>Name</FormLabel>
-//                   <FormControl>
-//                     <Input placeholder="John Doe" {...field} />
-//                   </FormControl>
-//                   <FormMessage />
-//                 </FormItem>
-//               )}
-//             />
-//             <FormField
-//               control={form.control}
-//               name="email"
-//               render={({ field }) => (
-//                 <FormItem>
-//                   <FormLabel>Email</FormLabel>
-//                   <FormControl>
-//                     <Input placeholder="name@example.com" {...field} />
-//                   </FormControl>
-//                   <FormMessage />
-//                 </FormItem>
-//               )}
-//             />
-//             <FormField
-//               control={form.control}
-//               name="password"
-//               render={({ field }) => (
-//                 <FormItem>
-//                   <FormLabel>Password</FormLabel>
-//                   <FormControl>
-//                     <Input type="password" placeholder="********" {...field} />
-//                   </FormControl>
-//                   <FormMessage />
-//                 </FormItem>
-//               )}
-//             />
-//             <Button type="submit" className="w-full" disabled={isLoading}>
-//               {isLoading && (
-//                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-//               )}
-//               Sign Up
-//             </Button>
-//           </form>
-//         </Form>
-//         <div className="relative">
-//           <div className="absolute inset-0 flex items-center">
-//             <span className="w-full border-t" />
-//           </div>
-//           <div className="relative flex justify-center text-xs uppercase">
-//             <span className="bg-background px-2 text-muted-foreground">
-//               Or continue with
-//             </span>
-//           </div>
-//         </div>
-//         <div className="grid grid-cols-2 gap-6">
-//           <Button variant="outline" disabled={isLoading}>
-//             <Icons.google className="mr-2 h-4 w-4" />
-//             Google
-//           </Button>
-//           <Button variant="outline" disabled={isLoading}>
-//             <Icons.facebook className="mr-2 h-4 w-4" />
-//             Facebook
-//           </Button>
-//         </div>
-//       </div>
-//       <p className="px-8 text-center text-sm text-muted-foreground">
-//         By clicking continue, you agree to our{" "}
-//         <a
-//           href="/terms"
-//           className="underline underline-offset-4 hover:text-primary"
-//         >
-//           Terms of Service
-//         </a>{" "}
-//         and{" "}
-//         <a
-//           href="/privacy"
-//           className="underline underline-offset-4 hover:text-primary"
-//         >
-//           Privacy Policy
-//         </a>
-//         .
-//       </p>
-//     </div>
-//   )
-// }
+    </>
+  )
+}
